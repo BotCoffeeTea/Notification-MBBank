@@ -11,9 +11,23 @@ class NotificationListener : NotificationListenerService(), TextToSpeech.OnInitL
 
     private lateinit var tts: TextToSpeech
 
+    private var keywords = mutableSetOf<String>()
+    private var regexPatterns = mutableSetOf<String>()
+
     override fun onCreate() {
         super.onCreate()
         tts = TextToSpeech(this, this)
+        loadPreferences()
+    }
+
+    private fun loadPreferences() {
+        keywords = PreferenceManager.getKeywords(this)
+        regexPatterns = PreferenceManager.getRegexPatterns(this)
+
+        if (regexPatterns.isEmpty()) {
+            // Fallback nếu user chưa add regex nào
+            regexPatterns.add("([+-]?[0-9]{1,3}(?:,[0-9]{3})*)")
+        }
     }
 
     override fun onInit(status: Int) {
@@ -24,13 +38,13 @@ class NotificationListener : NotificationListenerService(), TextToSpeech.OnInitL
 
     @SuppressLint("NewApi")
     override fun onNotificationPosted(sbn: StatusBarNotification) {
-        val packageName = sbn.packageName
+        val packageName = sbn.packageName ?: ""
         val notification = sbn.notification
         val extras = notification.extras
         val title = extras.getString("android.title") ?: ""
         val text = extras.getCharSequence("android.text")?.toString() ?: ""
 
-        if (packageName.contains("mbbank", true) || title.contains("MBBank", true)) {
+        if (keywords.any { keyword -> packageName.contains(keyword, ignoreCase = true) || title.contains(keyword, ignoreCase = true) }) {
             val amount = extractAmount(text)
             amount?.let {
                 speakAmount(it)
@@ -39,11 +53,14 @@ class NotificationListener : NotificationListenerService(), TextToSpeech.OnInitL
     }
 
     private fun extractAmount(text: String): Int? {
-        val pattern = Pattern.compile("([+-]?[0-9]{1,3}(?:,[0-9]{3})*)")
-        val matcher = pattern.matcher(text)
-        return if (matcher.find()) {
-            matcher.group(1)?.replace(",", "")?.toIntOrNull()
-        } else null
+        regexPatterns.forEach { patternString ->
+            val pattern = Pattern.compile(patternString)
+            val matcher = pattern.matcher(text)
+            if (matcher.find()) {
+                return matcher.group(1)?.replace(",", "")?.toIntOrNull()
+            }
+        }
+        return null
     }
 
     private fun speakAmount(amount: Int) {
