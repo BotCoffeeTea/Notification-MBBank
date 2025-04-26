@@ -99,5 +99,23 @@ private fun startForegroundService() {
 
     startForeground(1, notification)
 }
+override fun onInit(status: Int) {
+    if (status == TextToSpeech.SUCCESS) {
+        tts.language = Locale("vi", "VN")
+        tts.setSpeechRate(PreferenceManager.getSpeechRate(this))
+        setVoiceGender()
+    }
+}
 
+private fun setVoiceGender() {
+    val type = PreferenceManager.getVoiceType(this)
+    val voices = tts.voices
+    voices?.let {
+        val selected = it.find { voice ->
+            (type == "male" && voice.name.contains("male", true)) ||
+            (type == "female" && voice.name.contains("female", true))
+        }
+        selected?.let { tts.voice = it }
+    }
+}
 }
