@@ -1,1 +1,31 @@
-// Source code here...
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnAddKeyword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm Từ Khoá" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvKeywords"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnAddRegex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm Regex" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRegex"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp" />
+</LinearLayout>
