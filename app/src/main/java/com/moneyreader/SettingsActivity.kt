@@ -143,3 +143,37 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
     }
     return super.onOptionsItemSelected(item)
 }
+
+private fun showVoiceSettingsDialog() {
+    val options = arrayOf("Nam", "Nữ")
+    val speeds = arrayOf("0.5x", "1.0x", "1.5x")
+
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle("Chọn giọng đọc")
+    builder.setSingleChoiceItems(options, -1) { dialog, which ->
+        val type = if (which == 0) "male" else "female"
+        PreferenceManager.saveVoiceType(this, type)
+        dialog.dismiss()
+    }
+    builder.setNeutralButton("Chọn tốc độ") { dialog, _ ->
+        showSpeedDialog()
+    }
+    builder.show()
+}
+
+private fun showSpeedDialog() {
+    val speeds = arrayOf("0.5x", "1.0x", "1.5x")
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle("Chọn tốc độ đọc")
+    builder.setSingleChoiceItems(speeds, -1) { dialog, which ->
+        val rate = when (which) {
+            0 -> 0.5f
+            1 -> 1.0f
+            2 -> 1.5f
+            else -> 1.0f
+        }
+        PreferenceManager.saveSpeechRate(this, rate)
+        dialog.dismiss()
+    }
+    builder.show()
+}
