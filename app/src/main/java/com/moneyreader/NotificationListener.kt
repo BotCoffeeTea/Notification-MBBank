@@ -72,4 +72,32 @@ class NotificationListener : NotificationListenerService(), TextToSpeech.OnInitL
         tts.shutdown()
         super.onDestroy()
     }
+
+override fun onCreate() {
+    super.onCreate()
+    tts = TextToSpeech(this, this)
+    loadPreferences()
+    startForegroundService()
+}
+
+private fun startForegroundService() {
+    val channelId = "money_reader_channel"
+    val channelName = "Money Reader Notifications"
+    
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        val chan = android.app.NotificationChannel(channelId, channelName, android.app.NotificationManager.IMPORTANCE_LOW)
+        val manager = getSystemService(android.app.NotificationManager::class.java)
+        manager.createNotificationChannel(chan)
+    }
+
+    val notification = androidx.core.app.NotificationCompat.Builder(this, channelId)
+        .setContentTitle("MoneyReader đang chạy")
+        .setContentText("Đang lắng nghe thông báo...")
+        .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+        .setPriority(androidx.core.app.NotificationCompat.PRIORITY_LOW)
+        .build()
+
+    startForeground(1, notification)
+}
+
 }
