@@ -1,1 +1,38 @@
-// Source code here...
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MoneyReader</string>
+    
+    <!-- MainActivity -->
+    <string name="main_running">Money Reader App đang chạy...</string>
+    <string name="btn_settings">Cài đặt</string>
+
+    <!-- SettingsActivity -->
+    <string name="btn_add_keyword">Thêm Từ Khoá</string>
+    <string name="btn_add_regex">Thêm Regex</string>
+    <string name="title_edit_keyword">Sửa Từ Khoá</string>
+    <string name="title_edit_regex">Sửa Regex</string>
+    <string name="title_add_keyword">Thêm Từ Khoá Mới</string>
+    <string name="title_add_regex">Thêm Regex Mới</string>
+    
+    <!-- Voice Settings -->
+    <string name="title_voice_settings">Chọn giọng đọc</string>
+    <string name="title_speed_settings">Chọn tốc độ đọc</string>
+    <string name="voice_male">Nam</string>
+    <string name="voice_female">Nữ</string>
+
+    <!-- Menu Options -->
+    <string name="menu_export">Xuất cấu hình</string>
+    <string name="menu_import">Nhập cấu hình</string>
+    <string name="menu_voice">Cài đặt giọng nói</string>
+
+    <!-- Notification Foreground -->
+    <string name="notification_channel_name">Money Reader Notifications</string>
+    <string name="notification_running_title">MoneyReader đang chạy</string>
+    <string name="notification_running_text">Đang lắng nghe thông báo...</string>
+
+    <!-- Toasts -->
+    <string name="toast_export_success">Đã lưu cấu hình tại thư mục Downloads</string>
+    <string name="toast_export_failed">Xuất thất bại</string>
+    <string name="toast_import_success">Khôi phục thành công!</string>
+    <string name="toast_import_failed">Khôi phục thất bại</string>
+</resources>
