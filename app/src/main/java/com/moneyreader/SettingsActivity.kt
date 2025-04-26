@@ -129,4 +129,17 @@ class SettingsActivity : AppCompatActivity() {
             .setNegativeButton("Huỷ", null)
             .show()
     }
+
+}override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.settings_menu, menu)
+    return true
+}
+
+override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+        R.id.menu_export -> ExportImportManager.exportData(this)
+        R.id.menu_import -> ExportImportManager.importData(this)
+        R.id.menu_voice -> showVoiceSettingsDialog()
+    }
+    return super.onOptionsItemSelected(item)
 }
