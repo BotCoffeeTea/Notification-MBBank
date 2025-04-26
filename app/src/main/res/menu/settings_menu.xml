@@ -1,1 +1,11 @@
-// Source code here...
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_export"
+        android:title="Xuất cấu hình"/>
+    <item
+        android:id="@+id/menu_import"
+        android:title="Nhập cấu hình"/>
+    <item
+        android:id="@+id/menu_voice"
+        android:title="Cài đặt giọng nói"/>
+</menu>
